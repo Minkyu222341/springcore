@@ -1,9 +1,9 @@
-package com.sparta.springcore.service;
+package com.sparta.springcore.product.service;
 
-import com.sparta.springcore.domain.Product;
-import com.sparta.springcore.dto.ProductMypriceRequestDto;
-import com.sparta.springcore.dto.ProductRequestDto;
-import com.sparta.springcore.repository.ProductRepository;
+import com.sparta.springcore.product.domain.Product;
+import com.sparta.springcore.product.dto.ProductMypriceRequestDto;
+import com.sparta.springcore.product.dto.ProductRequestDto;
+import com.sparta.springcore.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package com.sparta.springcore.controller;
+package com.sparta.springcore.product.controller;
 
-import com.sparta.springcore.domain.Product;
-import com.sparta.springcore.dto.ProductMypriceRequestDto;
-import com.sparta.springcore.dto.ProductRequestDto;
-import com.sparta.springcore.service.ProductService;
+import com.sparta.springcore.product.domain.Product;
+import com.sparta.springcore.product.dto.ProductMypriceRequestDto;
+import com.sparta.springcore.product.dto.ProductRequestDto;
+import com.sparta.springcore.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
