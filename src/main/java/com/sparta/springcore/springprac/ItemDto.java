@@ -1,11 +1,11 @@
-//package com.sparta.springcore.springprac;
-//
-//import lombok.Getter;
-//
-//@Getter
-//public class ItemDto {
-//    private String title;
-//    private String link;
-//    private String image;
-//    private int lprice;
-//}
+package com.sparta.springcore.springprac;
+
+import lombok.Getter;
+
+@Getter
+public class ItemDto {
+    private String title;
+    private String link;
+    private String image;
+    private int lprice;
+}
