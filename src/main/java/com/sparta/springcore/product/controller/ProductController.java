@@ -1,13 +1,16 @@
 package com.sparta.springcore.product.controller;
 
 import com.sparta.springcore.product.domain.Product;
+import com.sparta.springcore.product.domain.UserRoleEnum;
 import com.sparta.springcore.product.dto.ProductMypriceRequestDto;
 import com.sparta.springcore.product.dto.ProductRequestDto;
 import com.sparta.springcore.product.service.ProductService;
+import com.sparta.springcore.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController // JSON으로 데이터를 주고받음을 선언합니다.
@@ -22,28 +25,41 @@ public class ProductController {
 
     // 신규 상품 등록
     @PostMapping("/api/products")
-    public Product createProduct(@RequestBody ProductRequestDto requestDto) throws SQLException {
-        Product product = productService.createProduct(requestDto);
+    public Product createProduct(@RequestBody ProductRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        // 로그인 되어 있는 회원 테이블의 ID
+        Long userId = userDetails.getUser().getId();
 
-// 응답 보내기
+        Product product = productService.createProduct(requestDto, userId);
+
+        // 응답 보내기
         return product;
     }
 
     // 설정 가격 변경
     @PutMapping("/api/products/{id}")
-    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto) throws SQLException {
-        Product product = productService.updateProduct(id, requestDto);
-
-// 응답 보내기 (업데이트된 상품 id)
-        return product.getId();
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userid = userDetails.getUser().getId();
+        if (id.equals(userid)) {
+            Product product = productService.updateProduct(id, requestDto);
+            // 응답 보내기 (업데이트된 상품 id)
+            return product.getId();
+        }
+        return 0L;
     }
 
-    // 등록된 전체 상품 목록 조회
+    // 로그인한 회원이 등록한 관심 상품 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts() throws SQLException {
-        List<Product> products = productService.getProducts();
+    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        // 로그인 되어 있는 회원 테이블의 ID
+        Long userId = userDetails.getUser().getId();
 
-// 응답 보내기
-        return products;
+        return productService.getProducts(userId);
+    }
+
+    // (관리자용) 등록된 모든 상품 목록 조회
+    @Secured(UserRoleEnum.Authority.ADMIN)
+    @GetMapping("/api/admin/products")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 }

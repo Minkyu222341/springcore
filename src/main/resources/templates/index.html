@@ -17,7 +17,7 @@
 <body>
 <div class="header" style="position:relative;">
     <div id="header-title-login-user">
-        <span th:text="${username}"></span> <span th:text="${email}"></span> 님의
+        <span th:text="${username}"></span> 님의
     </div>
     <div id="header-title-select-shop">
         Select Shop
@@ -62,5 +62,6 @@
         </div>
     </div>
 </div>
+<div th:if="${admin_role}" id="admin"></div>
 </body>
 </html>

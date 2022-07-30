@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ProductMypriceRequestDto {
     private int myprice;
+    private Long id;
 }
